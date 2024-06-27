@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swatch Watch Time.</title>
+    <link href="https://unpkg.com/concrete.css@2.1.1/concrete.css" rel="stylesheet" type="text/css" media="all">
+  </head>
+  <body>
+    <main>
+      <section>
+        <h3>
+        beats time
+        </h3>
+        <figure>
+            <blockquote id="beats"></blockquote>
+            <progress id="progbar" value="" max="100"></progress>
+        </figure>
+      </section>
+      <hr>
+      <footer>
+        <p>
+          By design, this page does not automatically refresh. <a href="">Update the Beat?</a> 
+        </p>
+        <p>
+          The <a href="https://rubygems.org/gems/rubyswizz">code</a> that I threw together to make this is <a href="https://github.com/mikesavior/rubyswizz">free to use.</a>
+        </p>
+        <p>
+          Beats belong to <a href="https://www.swatch.com/en-us/internet-time.html">The Swatch Group.</a>
+        </p>
+      </footer>
+    </main>
+
+    <script>
+      const apiUrl = 'https://jnc53cy6wrxt42fjjrz7dacsne0ruadu.lambda-url.us-east-1.on.aws/';
+      const display = document.getElementById('beats');
+      const progbar = document.getElementById('progbar');
+      
+      fetch(apiUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          display.textContent = `beat: ${data.beats}, ` + `date: ${data.date}`;
+          progbar.value =  `${((data.beats / 1000) * 100)}`;
+          data.beat
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });   
+    </script>
+
+  </body>
+</html>
