@@ -36,7 +36,7 @@
           return response.json();
         })
         .then(data => {
-          display.textContent = `beat: ${data.beats}, ` + `date: ${data.date}`;
+          display.textContent = `beat: ${data.beats}/1000, ` + `date: ${data.date}`;
           progbar.value =  `${((data.beats / 1000) * 100)}`;
           data.beat
         })
